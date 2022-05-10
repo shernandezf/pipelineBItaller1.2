@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 import pandas as pd
 from joblib import load
+import joblib
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 origins=[
@@ -26,8 +27,9 @@ def read_root():
 async def make_prediction(dataModel: DataModelapp):
     
     df = pd.DataFrame(dataModel.dict(),index=[0])
-    model = load("modelRandomForest.joblib")
-    result = model.predict(df)
+    model = joblib.load("rfc_pipeline.pkl")
+    prueba=[str(df['Limpiostudycondition'])]
+    
+    result = model.predict(prueba)
     resultado=result[0]
     return {"Resultado": resultado}
-    
