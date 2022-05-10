@@ -28,8 +28,6 @@ async def make_prediction(dataModel: DataModelapp):
     
     df = pd.DataFrame(dataModel.dict(),index=[0])
     model = joblib.load("rfc_pipeline.pkl")
-    prueba=[str(df['Limpiostudycondition'])]
-    
-    result = model.predict(prueba)
+    result = model.predict(df['Limpiostudycondition'])
     resultado=result[0]
     return {"Resultado": resultado}
